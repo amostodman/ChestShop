@@ -12,8 +12,6 @@ use pocketmine\item\ItemFactory;
 use pocketmine\level\Position;
 use pocketmine\math\Vector3;
 use pocketmine\tile\Chest;
-use pocketmine\Server;
-use pocketmine\utils\MainLogger;
 
 class EventListener implements Listener
 {
@@ -179,23 +177,23 @@ class EventListener implements Listener
 
 		// Check sign format...
 		if ($event->getLine(0) !== "") {
-			$this->server->getLogger()->info("ChestShop: Line 0 off. Done.");
+			//$this->server->getLogger()->info("ChestShop: Line 0 off. Done.");
 			return;
 		}
 		if (!is_numeric($saleNum) or $saleNum <= 0) {
-			$this->server->getLogger()->info("ChestShop: Line 1 off. Done.");
+			//$this->server->getLogger()->info("ChestShop: Line 1 off. Done.");
 			return;
 		}
 		if (!is_numeric($price) or $price < 0) {
-			$this->server->getLogger()->info("ChestShop: Line 2 off. Done.");
+			//$this->server->getLogger()->info("ChestShop: Line 2 off. Done.");
 			return;
 		};
 		if ($pID === false) {
-			$this->server->getLogger()->info("ChestShop: ID off. Done.");
+			//$this->server->getLogger()->info("ChestShop: ID off. Done.");
 			return;
 		};
 		if (($chest = $this->getSideChest($sign)) === false) {
-			$this->server->getLogger()->info("ChestShop: No side chest. Done.");
+			//$this->server->getLogger()->info("ChestShop: No side chest. Done.");
 			return;
 		};
 		$shops = $this->databaseManager->selectByCondition(["shopOwner" => "'$shopOwner'"]);
@@ -207,7 +205,7 @@ class EventListener implements Listener
 				$count[] = $res;
 		}
 		if((count($count) >= $this->plugin->getMaxPlayerShops($event->getPlayer()))) {
-			$this->server->getLogger()->info("ChestShop: Max shops. Done.");
+			//$this->server->getLogger()->info("ChestShop: Max shops. Done.");
 			return;
 		};
 
