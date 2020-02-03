@@ -176,11 +176,26 @@ class EventListener implements Listener
 		$sign = $event->getBlock();
 
 		// Check sign format...
-		if ($event->getLine(0) !== "") return;
-		if (!is_numeric($saleNum) or $saleNum <= 0) return;
-		if (!is_numeric($price) or $price < 0) return;
-		if ($pID === false) return;
-		if (($chest = $this->getSideChest($sign)) === false) return;
+		if ($event->getLine(0) !== "") {
+			$this->getLogger()->info("ChestShop: Line 0 off. Done.");
+			return;
+		}
+		if (!is_numeric($saleNum) or $saleNum <= 0) {
+			$this->getLogger()->info("ChestShop: Line 1 off. Done.");
+			return;
+		}
+		if (!is_numeric($price) or $price < 0) {
+			$this->getLogger()->info("ChestShop: Line 2 off. Done.");
+			return;
+		};
+		if ($pID === false) {
+			$this->getLogger()->info("ChestShop: ID off. Done.");
+			return;
+		};
+		if (($chest = $this->getSideChest($sign)) === false) {
+			$this->getLogger()->info("ChestShop: No side chest. Done.");
+			return;
+		};
 		$shops = $this->databaseManager->selectByCondition(["shopOwner" => "'$shopOwner'"]);
 		$res = true;
 		$count = [];
@@ -189,7 +204,10 @@ class EventListener implements Listener
 			if($res !== false)
 				$count[] = $res;
 		}
-		if((count($count) >= $this->plugin->getMaxPlayerShops($event->getPlayer()))) return;
+		if((count($count) >= $this->plugin->getMaxPlayerShops($event->getPlayer()))) {
+			$this->getLogger()->info("ChestShop: Max shops. Done.");
+			return;
+		};
 
 		$productName = ItemFactory::get($pID, $pMeta)->getName();
 		$event->setLine(0, $shopOwner);
