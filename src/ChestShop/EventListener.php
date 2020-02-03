@@ -78,7 +78,7 @@ class EventListener implements Listener
 				$player->getInventory()->addItem($item);
 				$sellerMoney = EconomyAPI::getInstance()->myMoney($shopInfo['shopOwner']);
 				$chestShopIssuer = new ChestShopIssuer;
-				if(EconomyAPI::getInstance()->reduceMoney($player->getName(), $shopInfo['price'], null, "ChestShop") === EconomyAPI::RET_SUCCESS and EconomyAPI::getInstance()->addMoney($shopInfo['shopOwner'], $shopInfo['price'], false, $chestShopIssuer) === EconomyAPI::RET_SUCCESS) {
+				if(EconomyAPI::getInstance()->reduceMoney($player->getName(), $shopInfo['price'], null, $chestShopIssuer) === EconomyAPI::RET_SUCCESS and EconomyAPI::getInstance()->addMoney($shopInfo['shopOwner'], $shopInfo['price'], null, $chestShopIssuer) === EconomyAPI::RET_SUCCESS) {
 					$player->sendMessage("Completed transaction");
 					if (($p = $this->plugin->getServer()->getPlayer($shopInfo['shopOwner'])) !== null) {
 						$p->sendMessage("{$player->getName()} purchased ".ItemFactory::get($pID, $pMeta)->getName()." for ".EconomyAPI::getInstance()->getMonetaryUnit().$shopInfo['price']);
